@@ -1,3 +1,5 @@
+import jokeListArr from '../jokes.js'
+
 const Joke = function() {
     let argsArr = Array.from(arguments);
     let questionContent = argsArr[0];
