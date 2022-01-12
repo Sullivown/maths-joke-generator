@@ -1,13 +1,27 @@
-const Joke = (questionContent, space1Options, space2Options) => {
-    let spaces = {
-        'space1': { 'options': space1Options.split(','), 'selection': null },
-        'space2': { 'options': space2Options ? space2Options.split(',') : null, 'selection': null }
-    };
+const Joke = function() {
+    let argsArr = Array.from(arguments);
+    let questionContent = argsArr[0];
+    let spaces = {};
     let formattedJoke = '';
 
     // Init
+    initializeSpaces();
     updateJoke();
     formatJoke();
+
+    function initializeSpaces() {
+        let spacesObj = argsArr.reduce((obj, item, currentIndex) => {
+            if (currentIndex === 0) {
+                return obj;
+            }
+
+            obj['space' + currentIndex] = { 'options': item.split(','), 'selection': null }
+
+            return obj;
+        }, {})
+
+        spaces = spacesObj;
+    }
 
     function getJokeDetails() {
         return { 
@@ -20,7 +34,7 @@ const Joke = (questionContent, space1Options, space2Options) => {
     function formatJoke() {
         let jokeFormatter = questionContent.replaceAll(/\*space\d+\*/g, (space) => {
             const spaceNum = space.slice(1, -1);
-            
+
             const jokeAnswerSpace = getJokeDetails().spaces[spaceNum].selection;
 
             return jokeAnswerSpace ? jokeAnswerSpace : '__________';
@@ -47,7 +61,7 @@ const Joke = (questionContent, space1Options, space2Options) => {
     function makeSelections() {
         answers = {};
 
-        for (space in spaces) {
+        for (const space in spaces) {
             const ranNum = Math.floor(Math.random() * spaces[space].options.length);
             answers[space] = spaces[space].options[ranNum];
         }
@@ -146,6 +160,8 @@ let displayController = (function() {
 
         for (const space in jokeDetails.spaces) {
             const jokeOptionDiv = document.createElement('div');
+            jokeOptionDiv.id = `joke-option-${space.slice(-1)}`
+            jokeOptionDiv.classList.add('joke-option-div');
             jokeOptionDiv.textContent = jokeDetails.spaces[space].options;
 
             jokeOptionsDiv.appendChild(jokeOptionDiv);
@@ -154,8 +170,8 @@ let displayController = (function() {
         // Controls
         const controlsDiv = document.createElement('div');
         const stopButton = document.createElement('button')
-        stopButton.id = 'stop-button';
-        stopButton.textContent = 'Stop';
+        stopButton.id = 'spin-button';
+        stopButton.textContent = 'Spin!';
 
         controlsDiv.appendChild(stopButton)
 
@@ -165,11 +181,31 @@ let displayController = (function() {
         app.appendChild(controlsDiv);
 
         // Event listeners
-        document.querySelector('#stop-button').addEventListener('click', () => {
+        document.querySelector('#spin-button').addEventListener('click', spin)
+
+    }
+
+    function spin() {
+        const spinButton = document.querySelector('#spin-button')
+        spinButton.removeEventListener('click', spin);
+        spinButton.textContent = 'Stop!';
+
+        let currentOption = 0;
+        setInterval(() => {
+            const optionDivs = document.querySelectorAll('.joke-option-div');
+            optionDivs.forEach(div => {
+                const divNum = div.id.slice(-1);
+                div.textContent = jokes.getCurrentJoke().getJokeDetails().spaces['space' + divNum].options[currentOption];
+            })
+            
+            currentOption += 1;
+        }, 1000)
+
+
+        spinButton.addEventListener('click', () => {
             jokes.getCurrentJoke().makeSelections();
             displayController.renderJoke();
         })
-
     }
 
     return {
