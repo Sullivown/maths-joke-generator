@@ -190,15 +190,32 @@ let displayController = (function() {
         spinButton.removeEventListener('click', spin);
         spinButton.textContent = 'Stop!';
 
-        let currentOption = 0;
+        let spinTracker = {};
+
+        const optionDivs = document.querySelectorAll('.joke-option-div');
+        optionDivs.forEach(div => {
+            const divNum = div.id.slice(-1);
+            spinTracker[div.id] = {
+                max: jokes.getCurrentJoke().getJokeDetails().spaces['space' + divNum].options.length - 1,
+                current: 0
+            };
+        });
+
         setInterval(() => {
-            const optionDivs = document.querySelectorAll('.joke-option-div');
+            
             optionDivs.forEach(div => {
+                const currentOption = spinTracker[div.id].current;
                 const divNum = div.id.slice(-1);
                 div.textContent = jokes.getCurrentJoke().getJokeDetails().spaces['space' + divNum].options[currentOption];
-            })
-            
-            currentOption += 1;
+                
+
+                if (spinTracker[div.id].current >= spinTracker[div.id].max) {
+                    spinTracker[div.id].current = 0;
+                } else {
+                    spinTracker[div.id].current += 1;
+                }
+            });
+
         }, 1000)
 
 
