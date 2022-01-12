@@ -12,7 +12,17 @@ body {
 }
 
 button {
+    font-size: 1.5rem;
     padding: 25px;
+    min-width: 15rem;
+}
+
+p {
+    font-size: 1.5rem;
+}
+
+button:hover {
+    cursor:pointer;
 }
 
 .center-content-div {
@@ -24,7 +34,9 @@ button {
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-size: 1.5rem;
 }
+
 #joke-options-div {
     margin: 25px;
     display: flex;
@@ -42,18 +54,22 @@ button {
     gap: 25px;
     flex-direction: column;
     align-items: center;
-    border: 1px solid black;
+    border: 5px solid black;
     padding: 25px;
+    border-radius: 15px;
 }
 
 .joke-option-title {
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 
 .joke-option-content {
+    font-size: 1.5rem;
     height: 100%;
     display: flex;
+    justify-content: center;
     align-items: center;
+    text-align: center;
 }
 
 #controls-div {
