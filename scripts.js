@@ -10,17 +10,10 @@ const Joke = function() {
     formatJoke();
 
     function initializeSpaces() {
-        let spacesObj = argsArr.reduce((obj, item, currentIndex) => {
-            if (currentIndex === 0) {
-                return obj;
-            }
-
-            obj['space' + currentIndex] = { 'options': item.split(','), 'selection': null }
-
-            return obj;
-        }, {})
-
-        spaces = spacesObj;
+        questionContent = jokeArr[0];
+        for (let i = 1; i < jokeArr.length; i++) {
+            spaces['space' + i] = { 'options': jokeArr[i], 'selection': null }
+        }
     }
 
     function getJokeDetails() {
@@ -81,18 +74,10 @@ let jokes = (function() {
     let currentJokeNum = 0;
 
     // Init
-    const joke1 = Joke(
-        'I Iike my *space1* like I like my *space2*...',
-        'maths problems,data analysis,maths textbooks,Chalkdust articles',
-        'bananas,knickerbocker glories,wellington boots,prime ministers,reality TV shows,pets'
-    );
-    jokesList.push(joke1);
-
-    const joke2 = Joke(
-        'asdasdadsadsa *space1* asdasdasadaads',
-        'maths problems,data analysis,maths textbooks,Chalkdust articles',
-    );
-    jokesList.push(joke2);
+    for (let i = 0; i < jokeListArr.length; i++) {
+        const joke = Joke(jokeListArr[i]);
+        jokesList.push(joke);
+    }
 
     function getJokesList() {
         return jokesList;
