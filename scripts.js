@@ -59,7 +59,7 @@ const Joke = function() {
     }
 
     function makeSelections() {
-        answers = {};
+        let answers = {};
 
         for (const space in spaces) {
             const ranNum = Math.floor(Math.random() * spaces[space].options.length);
