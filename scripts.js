@@ -1,7 +1,7 @@
 const Joke = (questionContent, space1Options, space2Options) => {
     let spaces = {
-        'space1': { 'options': space1Options, 'selection': null },
-        'space2': { 'options': space2Options, 'selection': null }
+        'space1': { 'options': space1Options.split(','), 'selection': null },
+        'space2': { 'options': space2Options ? space2Options.split(',') : null, 'selection': null }
     };
     let formattedJoke = '';
 
@@ -32,21 +32,33 @@ const Joke = (questionContent, space1Options, space2Options) => {
     function updateJoke(answers) {
         // Receives an answers object and updates the current joke with the relevent selections
         if (answers) {
-            if (answers.selection1) {
-                spaces.space1.selection = answers.selection1;
+            if (answers.space1) {
+                spaces.space1.selection = answers.space1;
             }
     
-            if (answers.selection2) {
-                spaces.space2.selection = answers.selection2;
+            if (answers.space2) {
+                spaces.space2.selection = answers.space2;
             }
         }
 
         formatJoke();
     }
 
+    function makeSelections() {
+        answers = {};
+
+        for (space in spaces) {
+            const ranNum = Math.floor(Math.random() * spaces[space].options.length);
+            answers[space] = spaces[space].options[ranNum];
+        }
+
+        updateJoke(answers);
+    }
+
     return { 
         getJokeDetails,
-        updateJoke
+        updateJoke,
+        makeSelections,
     };
 }
 
@@ -101,13 +113,14 @@ let displayController = (function() {
         div.appendChild(h1);
 
         let startButton = document.createElement('button');
+        startButton.id = 'start-button';
         startButton.textContent = 'Bring On the Jokes!'
         div.appendChild(startButton);
 
         app.appendChild(div);
 
         // Event listeners
-        document.querySelector('button').addEventListener('click', renderJoke);
+        document.querySelector('#start-button').addEventListener('click', renderJoke);
     }
 
     function renderJoke() {
@@ -115,32 +128,47 @@ let displayController = (function() {
         const joke = jokes.getCurrentJoke();
         const jokeDetails = joke.getJokeDetails();
 
-        let titleDiv = document.createElement('div');
+        // Title
+        const titleDiv = document.createElement('div');
 
-        let h1 = document.createElement('h1');
+        const h1 = document.createElement('h1');
         h1.textContent = `Joke ${joke.jokeNumber}`
         titleDiv.appendChild(h1);
 
-        let jokeQuestionDiv = document.createElement('div');
-        let p = document.createElement('p');
+        // Question
+        const jokeQuestionDiv = document.createElement('div');
+        const p = document.createElement('p');
         p.textContent = jokeDetails.formattedJoke;
         jokeQuestionDiv.appendChild(p);
 
-        let jokeOptionsDiv = document.createElement('div');
+        // Options
+        const jokeOptionsDiv = document.createElement('div');
 
-        if (jokeDetails.space1) {
-            let jokeOptionDiv = document.createElement('div');
-            jokeOptionDiv.textContent = 'JOKE OPTIONS!';
+        for (const space in jokeDetails.spaces) {
+            const jokeOptionDiv = document.createElement('div');
+            jokeOptionDiv.textContent = jokeDetails.spaces[space].options;
 
             jokeOptionsDiv.appendChild(jokeOptionDiv);
         }
 
-        let controlsDiv = document.createElement('div');
+        // Controls
+        const controlsDiv = document.createElement('div');
+        const stopButton = document.createElement('button')
+        stopButton.id = 'stop-button';
+        stopButton.textContent = 'Stop';
+
+        controlsDiv.appendChild(stopButton)
 
         app.appendChild(titleDiv);
         app.appendChild(jokeQuestionDiv);
         app.appendChild(jokeOptionsDiv);
         app.appendChild(controlsDiv);
+
+        // Event listeners
+        document.querySelector('#stop-button').addEventListener('click', () => {
+            jokes.getCurrentJoke().makeSelections();
+            displayController.renderJoke();
+        })
 
     }
 
