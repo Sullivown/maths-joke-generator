@@ -1,7 +1,9 @@
 import jokeListArr from '../jokes.js'
 
-const Joke = function(jokeArr) {
-    let questionContent = ''
+
+const Joke = function() {
+    let argsArr = Array.from(arguments);
+    let questionContent = argsArr[0];
     let spaces = {};
     let formattedJoke = '';
 
