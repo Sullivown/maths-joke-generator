@@ -1,3 +1,4 @@
+
 const jokeList = [
     {
         'questionContent': 'I Iike my * like I like my *...',
@@ -14,4 +15,4 @@ const jokeList = [
     },
 ]
 
-export default jokeList;
+export default jokeListArr;
