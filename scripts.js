@@ -89,26 +89,26 @@ let jokes = (function() {
     jokesList.push(joke1);
 
     const joke2 = Joke(
-        'What did the * say to the *?',
+        'What did the *space1* say to the *space2*?',
         'circle,tangent,hexagon,right angle,zero,equals sign',
         'square,curve,parallelogram,negative number,multiplication sign,ruler'
     );
     jokesList.push(joke2);
     
     const joke3 = Joke(
-        'A * walks into a bar...',
+        'A *space1* walks into a bar...',
         'mathematician,statistician,circle,straight line,protractor,calculator',
     );
     jokesList.push(joke3);
     
     const joke4 = Joke(
-        'Why did the * cross the road?',
+        'Why did the *space1* cross the road?',
         'Non-specific dynamic geometry software,calculator,female mathematician,maths communicator,maths student,maths homework,angle',
     );
     jokesList.push(joke4);
     
     const joke5 = Joke(
-        'How many * does it take to change a lightbulb?',
+        'How many *space1* does it take to change a lightbulb?',
         'maths teachers,parents who hate maths,maths communicators,spouses of maths communicators,Pythagorases',
     );
     jokesList.push(joke5);
