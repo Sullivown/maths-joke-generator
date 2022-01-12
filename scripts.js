@@ -78,7 +78,7 @@ const Joke = function() {
 
 let jokes = (function() {
     let jokesList = [];
-    currentJokeNum = 0;
+    let currentJokeNum = 0;
 
     // Init
     const joke1 = Joke(
