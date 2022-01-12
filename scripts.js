@@ -10,10 +10,17 @@ const Joke = function() {
     formatJoke();
 
     function initializeSpaces() {
-        questionContent = jokeArr[0];
-        for (let i = 1; i < jokeArr.length; i++) {
-            spaces['space' + i] = { 'options': jokeArr[i], 'selection': null }
-        }
+        let spacesObj = argsArr.reduce((obj, item, currentIndex) => {
+            if (currentIndex === 0) {
+                return obj;
+            }
+
+            obj['space' + currentIndex] = { 'options': item.split(','), 'selection': null }
+
+            return obj;
+        }, {})
+
+        spaces = spacesObj;
     }
 
     function getJokeDetails() {
@@ -52,7 +59,7 @@ const Joke = function() {
     }
 
     function makeSelections() {
-        let answers = {};
+        answers = {};
 
         for (const space in spaces) {
             const ranNum = Math.floor(Math.random() * spaces[space].options.length);
@@ -74,10 +81,18 @@ let jokes = (function() {
     let currentJokeNum = 0;
 
     // Init
-    for (let i = 0; i < jokeListArr.length; i++) {
-        const joke = Joke(jokeListArr[i]);
-        jokesList.push(joke);
-    }
+    const joke1 = Joke(
+        'I Iike my *space1* like I like my *space2*...',
+        'maths problems,data analysis,maths textbooks,Chalkdust articles',
+        'bananas,knickerbocker glories,wellington boots,prime ministers,reality TV shows,pets'
+    );
+    jokesList.push(joke1);
+
+    const joke2 = Joke(
+        'asdasdadsadsa *space1* asdasdasadaads',
+        'maths problems,data analysis,maths textbooks,Chalkdust articles',
+    );
+    jokesList.push(joke2);
 
     function getJokesList() {
         return jokesList;
