@@ -178,6 +178,7 @@ let displayController = (function() {
 
         // Title
         const titleDiv = document.createElement('div');
+        titleDiv.id = 'joke-title-div';
         titleDiv.classList.add('center-content-div');
 
         const h1 = document.createElement('h1');
@@ -294,7 +295,7 @@ let displayController = (function() {
                     spinTracker[div.id].current += 1;
                 }
             });
-        }, 500)
+        }, 500);
 
         document.querySelector('#back-button').disabled = true;
         document.querySelector('#next-button').disabled = true;
