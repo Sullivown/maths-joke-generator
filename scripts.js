@@ -37,7 +37,7 @@ const Joke = function() {
 
             const jokeAnswerSpace = getJokeDetails().spaces[spaceNum].selection;
 
-            return jokeAnswerSpace ? jokeAnswerSpace : '__________';
+            return jokeAnswerSpace ? jokeAnswerSpace.bold() : '__________';
         });
 
         formattedJoke = jokeFormatter;
@@ -188,7 +188,7 @@ let displayController = (function() {
         const jokeQuestionDiv = document.createElement('div');
         jokeQuestionDiv.classList.add('center-content-div');
         const p = document.createElement('p');
-        p.textContent = jokeDetails.formattedJoke;
+        p.innerHTML = jokeDetails.formattedJoke;
         jokeQuestionDiv.appendChild(p);
 
         // Options
