@@ -1,7 +1,7 @@
 const jokeListArr = [
     {
         'question': 'I Iike my *space1* like I like my *space2*...',
-        'space1': 'maths problems,data analysis,maths textbooks,Chalkdust articles,proofs,theorem names',
+        'space1': 'maths problems,data analysis,maths textbooks,Chalkdust articles,proofs,theorem names,mathematical comedy',
         'space2': 'bananas,knickerbocker glories,wellington boots,prime ministers,reality TV shows,pets,shampoo adverts,eggs,eurovision songs,soft furnishings',
     },
     {
@@ -19,7 +19,7 @@ const jokeListArr = [
     },
     {
         'question': 'How many *space1* does it take to change a lightbulb?',
-        'space1': 'maths teachers,parents who hate maths,maths communicators,spouses of maths communicators,Pythagorases,averages',
+        'space1': 'maths teachers,parents who hate maths,maths communicators,spouses of maths communicators,Pythagorases,averages,mathematical comedy writers',
     },
 ]
 
