@@ -13,10 +13,8 @@ const Joke = function(jokeObj) {
 
     function initializeSpaces() {
         for (const prop in jokeObj) {
-            console.log(jokeObj[prop])
             if (prop == 'question') {
-                console.log('first line!')
-                continue
+                continue;
             } else {
                 spaces[prop] =  { 'options': jokeObj[prop].split(','), 'selection': null }
             }
@@ -181,7 +179,7 @@ let displayController = (function() {
 
             const selectContentDiv = document.createElement('div');
             selectContentDiv.classList.add('joke-option-content');
-            console.log(jokeDetails.spaces[space].selection);
+
             if (jokeDetails.spaces[space].selection) {
                 selectContentDiv.textContent = jokeDetails.spaces[space].selection;
                 
@@ -190,8 +188,6 @@ let displayController = (function() {
             }
             
             jokeOptionDiv.appendChild(selectContentDiv);
-            
-
             jokeOptionsDiv.appendChild(jokeOptionDiv);
         }
 
