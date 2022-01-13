@@ -1,6 +1,8 @@
-const Joke = function() {
-    let argsArr = Array.from(arguments);
-    let questionContent = argsArr[0];
+import jokeListArr from './jokes.js';
+
+const Joke = function(jokeObj) {
+    // let argsArr = Array.from(arguments);
+    let questionContent = jokeObj.question;
     let spaces = {};
     let formattedJoke = '';
 
@@ -10,17 +12,15 @@ const Joke = function() {
     formatJoke();
 
     function initializeSpaces() {
-        let spacesObj = argsArr.reduce((obj, item, currentIndex) => {
-            if (currentIndex === 0) {
-                return obj;
+        for (const prop in jokeObj) {
+            console.log(jokeObj[prop])
+            if (prop == 'question') {
+                console.log('first line!')
+                continue
+            } else {
+                spaces[prop] =  { 'options': jokeObj[prop].split(','), 'selection': null }
             }
-
-            obj['space' + currentIndex] = { 'options': item.split(','), 'selection': null }
-
-            return obj;
-        }, {})
-
-        spaces = spacesObj;
+        }
     }
 
     function getJokeDetails() {
@@ -81,37 +81,10 @@ let jokes = (function() {
     let currentJokeNum = 0;
 
     // Init
-    const joke1 = Joke(
-        'I Iike my *space1* like I like my *space2*...',
-        'maths problems,data analysis,maths textbooks,Chalkdust articles',
-        'bananas,knickerbocker glories,wellington boots,prime ministers,reality TV shows,pets'
-    );
-    jokesList.push(joke1);
-
-    const joke2 = Joke(
-        'What did the *space1* say to the *space2*?',
-        'circle,tangent,hexagon,right angle,zero,equals sign',
-        'square,curve,parallelogram,negative number,multiplication sign,ruler'
-    );
-    jokesList.push(joke2);
-    
-    const joke3 = Joke(
-        'A *space1* walks into a bar...',
-        'mathematician,statistician,circle,straight line,protractor,calculator',
-    );
-    jokesList.push(joke3);
-    
-    const joke4 = Joke(
-        'Why did the *space1* cross the road?',
-        'Non-specific dynamic geometry software,calculator,female mathematician,maths communicator,maths student,maths homework,angle',
-    );
-    jokesList.push(joke4);
-    
-    const joke5 = Joke(
-        'How many *space1* does it take to change a lightbulb?',
-        'maths teachers,parents who hate maths,maths communicators,spouses of maths communicators,Pythagorases',
-    );
-    jokesList.push(joke5);
+    for(const joke in jokeListArr) {
+        const newJoke = Joke(jokeListArr[joke])
+        jokesList.push(newJoke);
+    }
     
     function getJokesList() {
         return jokesList;
