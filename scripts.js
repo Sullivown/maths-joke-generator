@@ -207,7 +207,14 @@ let displayController = (function() {
 
             const selectContentDiv = document.createElement('div');
             selectContentDiv.classList.add('joke-option-content');
-            selectContentDiv.textContent = 'Spin to select!';
+            console.log(jokeDetails.spaces[space].selection);
+            if (jokeDetails.spaces[space].selection) {
+                selectContentDiv.textContent = jokeDetails.spaces[space].selection;
+                
+            } else {
+                selectContentDiv.textContent = 'Spin to select!';
+            }
+            
             jokeOptionDiv.appendChild(selectContentDiv);
             
 
